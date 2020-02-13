@@ -1,0 +1,35 @@
+parameters:
+- name: name
+  type: string
+
+- name: dockerFilePath
+  type: string
+
+- name: skipInstall
+  type: boolean
+  default: false
+
+- name: skipInstallNetCore
+  type: boolean
+  default: false
+
+- name: dockerVersion
+  type: string
+  default: '17.09.0-ce'
+
+steps:
+- template: '../Install/Install Docker.yml'
+  parameters:
+    skip: '${{parameters.skipInstall}}'
+
+steps:
+- template: '../Install/Install Net Core.yml'
+  parameters:
+    skip: '${{parameters.skipInstallNetCore}}'
+
+- task: Docker@2
+  displayName: 'Build ${{parameters.name}} Docker container'
+  inputs:
+    command: 'build'
+    Dockerfile: ${{parameters.dockerFilePath}}
+    buildContext: '.'

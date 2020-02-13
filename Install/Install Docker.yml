@@ -1,0 +1,14 @@
+parameters:
+- name: skip
+  type: boolean
+  default: false
+
+- name: version
+  type: string
+  default: '17.09.0-ce'
+
+- task: DockerInstaller@0
+  displayName: 'Install Docker CLI'
+  condition: and(succeeded(), eq('${{parameters.skip}}', false))
+  inputs:
+    dockerVersion: '${{parameters.version}}'
