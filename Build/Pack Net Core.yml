@@ -20,7 +20,7 @@ parameters:
   default: false
 
 steps:
-- template: '../Install/Install Net Core.yml'
+- template: 'Install Net Core.yml'
   parameters:
     skip: '${{parameters.skipInstall}}'
     version: '${{parameters.version}}'
